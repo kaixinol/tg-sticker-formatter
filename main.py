@@ -1,17 +1,23 @@
-import argparse
+from argparse import RawTextHelpFormatter,ArgumentParser
 from sys import argv
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', metavar='INPUT', type=str,required=True,
+parser = ArgumentParser(
+    description='A resize tool that convert images (gif and webp, jpg, png) that do not meet Telegram Sticker requirements into acceptable images or video streams(webm) of 512x512 size.\n\tGithub: \033[4;5mhttps://github.com/kaixinol/tg-sticker-formatter\033[0m',
+    epilog='''
+Example:
+\tmain.py -i input_folder -o output_folder --multhread 10
+\tmain.py -i input_file -o output_file --align left
+''', formatter_class=RawTextHelpFormatter)
+parser.add_argument('-i', metavar='INPUT', type=str, required=True,
                     help="The file or folder path that needs to be converted")
-parser.add_argument('-a','--align', metavar='align_type',
-                    choices=['center', 'left'], default="center", help="specify an alignment.center or left.\n\033[31mdefault is center\033[0m")
+parser.add_argument('-a', '--align', metavar='ALIGN_TYPE',
+                    choices=['center', 'left'], default="center", help="specify an alignment.center or left.\033[31mdefault is center\033[0m")
 parser.add_argument('-o', metavar='OUTPUT', default='/',
                     help="saved location after conversion")
-parser.add_argument('-f','--force', action='store_true', default=False,
+parser.add_argument('-f', '--force', action='store_true', default=False,
                     help='Whether to forcibly zoom if the image size is too small \033[31mdefault is disabled\033[0m')
-parser.add_argument('-thread','--multhread', metavar='THREAD',default=2,type=int,
+parser.add_argument('-thread', '--multhread', metavar='THREAD', default=2, type=int,
                     help='The number of concurrent tasks. \033[31mdefault is 2\033[0m')
-if len(argv)==1:
+if len(argv) == 1:
     parser.print_help()
     exit(0)
 args = parser.parse_args()
