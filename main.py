@@ -1,21 +1,24 @@
-import subprocess
-from PIL import Image
-from loguru import logger
-import os
-from os import listdir
-from os.path import isfile, join
-import math
-try:
-    os.mkdir('Output')
-except Exception as e:
-    logger.error(e)
-onlyfiles = [f for f in listdir("Input") if isfile(join("Input", f))]
+import argparse
+from sys import argv
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', metavar='INPUT', type=str,required=True,
+                    help="The file or folder path that needs to be converted")
+parser.add_argument('-a','--align', metavar='align_type',
+                    choices=['center', 'left'], default="center", help="specify an alignment.center or left.\n\033[31mdefault is center\033[0m")
+parser.add_argument('-o', metavar='OUTPUT', default='/',
+                    help="saved location after conversion")
+parser.add_argument('-f','--force', action='store_true', default=False,
+                    help='Whether to forcibly zoom if the image size is too small \033[31mdefault is disabled\033[0m')
+parser.add_argument('-thread','--multhread', metavar='THREAD',default=2,type=int,
+                    help='The number of concurrent tasks. \033[31mdefault is 2\033[0m')
+if len(argv)==1:
+    parser.print_help()
+    exit(0)
+args = parser.parse_args()
 
-
+'''
 def resize(image_pil, width, height):
-    '''
-    Resize PIL image keeping ratio and using white background.
-    '''
+#Resize PIL image keeping ratio and using white background.
     ratio_w = width / image_pil.width
     ratio_h = height / image_pil.height
     if ratio_w < ratio_h:
@@ -86,3 +89,4 @@ for file in onlyfiles:
                 f'ffmpeg -i {b2} -c:v libvpx-vp9 -r 30 -loglevel quiet -vf scale=512:512 {b1}.webm')
     else:
         logger.warning(f'ignore: {file}')
+'''
