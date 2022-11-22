@@ -15,7 +15,7 @@ parser.add_argument('-o', metavar='OUTPUT', default='/',
                     help="saved location after conversion")
 parser.add_argument('-f', '--force', action='store_true', default=False,
                     help='Whether to forcibly zoom if the image size is too small \033[31mdefault is disabled\033[0m')
-parser.add_argument('-thread', '--multhread', metavar='THREAD', default=2, type=int,
+parser.add_argument('-thread', '--multithread', metavar='THREAD', default=2, type=int,
                     help='The number of concurrent tasks. \033[31mdefault is 2\033[0m')
 if len(argv) == 1:
     parser.print_help()
