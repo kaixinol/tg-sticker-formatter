@@ -24,9 +24,8 @@ if len(argv) == 1:
     exit(0)
 args = parser.parse_args()
 work = list()
-
-def resize_gif
-def resize_pic(image):
+#def resize_gif
+def resize_pic(image,path):
     def default(image_pil):
         ratio_w = 512 / image_pil.width
         ratio_h = 512 / image_pil.height
@@ -50,20 +49,20 @@ def resize_pic(image):
         resize_h = int(image_pil.height*salt)
         image_resize = image_pil.resize(
         (resize_w, resize_h), Image.Resampling.LANCZOS)
-        background = Image.new('RGBA', (512, 512), (0, 0, 0, 0))
-        offset = (round((512-resize_w)/2),
-              round((512-resize_h)/2))
-        background.paste(image_resize, offset,mask=background)
+        background = Image.new('RGBA', (512, resize_h), (0, 0, 0, 0))
+        background.paste(image_resize, (0,0),mask=image_resize if image_resize.mode == "RGBA" else None)
         return background
-
-    pic=Image.open(image, 'r')
+    image=Image.open(image, 'r')
     if args.force or not (image.width < 200 or 200 > image.height):
-        return default(pic)
+        default(image).save(path,quality=95)
     else:
-        return small(pic)
+        small(image).save(path,quality=95)
+resize_pic('error.jpg','error.png')
+
 def get_task():
     if isdir(args.i):
-
+        pass
+'''
 for file in onlyfiles:
     if file[file.find('.'):].lower() in ['.webp', '.png', '.jpg']:
         image = Image.open(os.getcwd()+'/Input/'+file, 'r')
@@ -92,3 +91,4 @@ for file in onlyfiles:
                 f'ffmpeg -i {b2} -c:v libvpx-vp9 -r 30 -loglevel quiet -vf scale=512:512 {b1}.webm')
     else:
         logger.warning(f'ignore: {file}')
+'''
